@@ -18,7 +18,7 @@ def merge(left, right):
 def merge_sort(list):
     if len(list) <= 1:
         return list
-    half = len(list)//2
+    half = len(list) // 2
     left = merge_sort(list[:half])
     right = merge_sort(list[half:])
 
