@@ -1,6 +1,6 @@
 import time
 import pygame
-import colors
+from src import colors
 import sys
 import random
 import threading

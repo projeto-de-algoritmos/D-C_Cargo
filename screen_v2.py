@@ -7,6 +7,10 @@ pygame.init()
 clock = pygame.time.Clock()
 size = (1366, 768)
 
+players_img = pygame.image.load('ship-player.png')
+ships_img = pygame.image.load('ships.png')
+port_img = pygame.image.load('port.png')
+
 screen = pygame.display.set_mode(size)
 screen.fill(colors.WHITE)
 
@@ -28,9 +32,9 @@ def update(player, out, ships):
         player.rect[1] = 0
     elif player.rect[1] > 748:
         player.rect[1] = 748
-    screen.fill(colors.WHITE)
-    draw_circle(player, colors.PLAYER)
-    draw_circle(out, colors.EXIT)
+    screen.fill(colors.BRIGHT_GREEN)
+    screen.blit(players_img, player)
+    screen.blit(port_img, out)
     for ship in ships:
         if ship.rect[0] < -30 or ship.rect[0] > 1400 or ship.rect[1] < -30 or ship.rect[1] > 800:
             ships.remove(ship)
@@ -41,7 +45,7 @@ def update(player, out, ships):
         ship.positions[1] += ship.velocity[1]
         ship.positions[0] -= ship.velocity[2]
         ship.positions[0] += ship.velocity[3]
-        draw_circle(ship, colors.BLACK)
+        screen.blit(ships_img, ship)
 
 
 class Player(object):
@@ -55,7 +59,7 @@ class Player(object):
 class Exit(object):
     def __init__(self):
         self.color = colors.EXIT
-        self.rect = pygame.Rect(1336, 738, 20, 20)
+        self.rect = pygame.Rect(1298, 698, 20, 20)
 
 
 def negative_x(ship):
