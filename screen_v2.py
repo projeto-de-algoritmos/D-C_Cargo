@@ -2,6 +2,10 @@ import pygame
 import colors
 import sys
 import random
+import merge_sort as mg
+import closest_pair_of_points as closest
+import math
+import time
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -39,12 +43,12 @@ def update(player, out, ships):
         if ship.rect[0] < -30 or ship.rect[0] > 1400 or ship.rect[1] < -30 or ship.rect[1] > 800:
             ships.remove(ship)
             continue
-        ship.rect[0] = ship.positions[0]
-        ship.rect[1] = ship.positions[1]
         ship.positions[1] -= ship.velocity[0]
         ship.positions[1] += ship.velocity[1]
         ship.positions[0] -= ship.velocity[2]
         ship.positions[0] += ship.velocity[3]
+        ship.rect[0] = ship.positions[0]
+        ship.rect[1] = ship.positions[1]
         screen.blit(ships_img, ship)
 
 
@@ -53,13 +57,29 @@ class Player(object):
         self.color = colors.PLAYER
         self.rect = pygame.Rect(10, 10, 20, 20)
         self.movement = [0, 0, 0, 0]
-        self.points = 100
 
 
 class Exit(object):
     def __init__(self):
         self.color = colors.EXIT
         self.rect = pygame.Rect(1298, 698, 20, 20)
+
+
+class Ship(object):
+    def __init__(self):
+        spawn_points = {
+            "negative_x": negative_x,
+            "positive_x": positive_x,
+            "negative_y": negative_y,
+            "positive_y": positive_y
+        }
+        directions = ["negative_x", "negative_y", "positive_x", "positive_y"]
+        chances = [0.25, 0.25, 0.25, 0.25]
+        self.velocity = [0, 0, 0, 0]
+        self.positions = [0, 0]
+        self.color = colors.BLACK
+        self.rect = pygame.Rect(0, 0, 20, 20)
+        spawn_points[random.choices(directions, chances)[0]](self)
 
 
 def negative_x(ship):
@@ -94,26 +114,37 @@ def positive_y(ship):
     ship.velocity[2] = random.random()
 
 
-class Ship(object):
-    def __init__(self):
-        spawn_points = {
-            "negative_x": negative_x,
-            "positive_x": positive_x,
-            "negative_y": negative_y,
-            "positive_y": positive_y
-        }
-        directions = ["negative_x", "negative_y", "positive_x", "positive_y"]
-        chances = [0.25, 0.25, 0.25, 0.25]
-        self.velocity = [0, 0, 0, 0]
-        self.positions = [0, 0]
-        self.color = colors.BLACK
-        self.rect = pygame.Rect(0, 0, 20, 20)
-        spawn_points[random.choices(directions, chances)[0]](self)
-
-
 def quit_game():
     pygame.quit()
     sys.exit()
+
+
+def get_x_coordinates(ships, player):
+    temp = []
+    for ship in ships:
+        temp.append((ship.rect[0], ship.rect[1]))
+    temp.append((player.rect[0], player.rect[1]))
+    return temp
+
+
+def collision(ships, ordered_array, player):
+    if ships:
+        pair = closest.closest_pair(ordered_array)
+        p1 = pair[0]
+        p2 = pair[1]
+        if p1 and math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) < 30:
+            if time.process_time() < 3:
+                return
+            elif p1 == (player.rect[0], player.rect[1]) or p2 == (player.rect[0], player.rect[1]):
+                quit_game()
+            for x in ships:
+                if (x.rect[0], x.rect[1]) == p1:
+                    ships.remove(x)
+                    break
+            for x in ships:
+                if (x.rect[0], x.rect[1]) == p2:
+                    ships.remove(x)
+                    break
 
 
 def game_loop():
@@ -128,6 +159,8 @@ def game_loop():
         if loop_counter == 100:
             ships.append(Ship())
             loop_counter = 0
+        ordered_array = mg.merge_sort(get_x_coordinates(ships, player))
+        collision(ships, ordered_array, player)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
