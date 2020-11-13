@@ -10,6 +10,7 @@ clock = pygame.time.Clock()
 size = (1366, 768)
 level = 1
 
+# variables for window customization
 menu = pygame.image.load('../src/images/menu.png')
 players_img = pygame.image.load('../src/images/ship-player.png')
 ships_img = pygame.image.load('../src/images/ships.png')
@@ -22,6 +23,7 @@ screen = pygame.display.set_mode(size)
 screen.fill(colors.WHITE)
 
 
+# updates and redraws position of all objects on screen
 def update(player, out, ships):
     player.rect[1] -= player.movement[0]
     player.rect[1] += player.movement[1]
@@ -64,6 +66,10 @@ class Exit(object):
         self.rect = pygame.Rect(1298, 698, 20, 20)
 
 
+# the spawn points dictionary is used to randomly select a position and direction
+# for each spawned ship. this method is faster than using if/elif statements,
+# because it doesn't require comparisons every iteration. instead, it simply
+# calls the function assigned to each key
 class Ship(object):
     def __init__(self):
         spawn_points = {
@@ -89,6 +95,7 @@ def get_x_coordinates(ships, player):
     return temp
 
 
+# detects collision using closest pair algorithm
 def collision(ships, ordered_array, player, time_elapsed):
     if ships:
         pair = closest.closest_pair(ordered_array)
@@ -117,7 +124,6 @@ def menu_window():
 
         screen.fill(colors.WHITE)
         screen.blit(menu, (0, 0))
-
 
         aux.button(screen, 'START', 590, 450, 200, 100, colors.BRIGHT_GREEN, game_loop)
         pygame.display.update()

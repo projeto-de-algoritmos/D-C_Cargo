@@ -49,6 +49,7 @@ def game_finish_text(screen):
     screen.blit(win_text, (130, 300))
 
 
+# next four functions randomly generate position and direction for each ship
 def negative_x(ship):
     ship.positions[0] = -20
     ship.positions[1] = random.randint(0, 768)

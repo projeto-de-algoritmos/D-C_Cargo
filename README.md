@@ -65,7 +65,8 @@ python3 src/game.py
 * Clique em *Quit* para encerrar o jogo.
 
 ## Outros 
-A quantidade de navios "inimigos" que aparecem por segundo aumenta a cada fase. São 5 fases no total.
+A quantidade de navios "inimigos" que aparecem por segundo aumenta a cada fase. São 5 fases no total.</br>
+Ao iniciar/reiniciar um nível, há um período de 1,5 segundos durante o qual colisões não serão registradas. Esse período foi implementado para evitar que uma embarcação colida com o jogador assim que o jogo for iniciado.
 
 
 
