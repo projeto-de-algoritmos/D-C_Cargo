@@ -1,21 +1,18 @@
 import pygame
-import colors
 import random
 import math
 import time
 
-import merge_sort as mg
-import closest_pair_of_points as closest
-import auxiliary as aux
+from src import merge_sort as mg, closest_pair_of_points as closest, auxiliary as aux, colors
 
 pygame.init()
 clock = pygame.time.Clock()
 size = (1366, 768)
 level = 1
 
-players_img = pygame.image.load('ship-player.png')
-ships_img = pygame.image.load('ships.png')
-port_img = pygame.image.load('port.png')
+players_img = pygame.image.load('../src/images/ship-player.png')
+ships_img = pygame.image.load('../src/images/ships.png')
+port_img = pygame.image.load('../src/images/port.png')
 
 screen = pygame.display.set_mode(size)
 screen.fill(colors.WHITE)
