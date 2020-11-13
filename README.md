@@ -13,7 +13,21 @@
 Cargo é um jogo onde o jogador deve levar seu navio cargueiro até o porto sem colidir com outros navios. O projeto utiliza o algoritmo de Par de Pontos mais Próximos para detectar se houve uma colisão entre dois navios quaisquer.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+* #### Menu
+
+![print_menu](src/images/screen1.png)
+
+* #### Tela de vitória da fase
+
+![lose](src/images/screen3.png)
+
+* #### Tela de derrota
+
+![lose](src/images/screen2.png)
+
+* #### Tela de vitória do jogo
+
+![lose](src/images/screen4.png)
 
 ## Instalação 
 **Linguagem**: Python<br>
@@ -22,11 +36,11 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 * Clone o repositório:
 ```bash
-git clone https://github.com/projeto-de-algoritmos/D-C_Dupla13A.git
+git clone https://github.com/projeto-de-algoritmos/D-C_Cargo.git
 ```
 * Acesse o repositório e instale as bibliotecas necessárias:
 ```bash
-cd D-C_Dupla31A/
+cd D-C_Cargo/
 pip3 install -r requirements.txt
 ```
 * Execute o Cargo e divirta-se:

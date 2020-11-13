@@ -10,6 +10,7 @@ clock = pygame.time.Clock()
 size = (1366, 768)
 level = 1
 
+menu = pygame.image.load('../src/images/menu.png')
 players_img = pygame.image.load('../src/images/ship-player.png')
 ships_img = pygame.image.load('../src/images/ships.png')
 port_img = pygame.image.load('../src/images/port.png')
@@ -114,9 +115,11 @@ def menu_window():
             if event.type == pygame.QUIT:
                 aux.quit_game()
 
-        screen.fill(colors.BLUE)
+        screen.fill(colors.WHITE)
+        screen.blit(menu, (0, 0))
 
-        aux.button(screen, 'START', 590, 550, 200, 100, colors.BRIGHT_GREEN, game_loop)
+
+        aux.button(screen, 'START', 590, 450, 200, 100, colors.BRIGHT_GREEN, game_loop)
         pygame.display.update()
         clock.tick(15)
 
