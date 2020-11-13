@@ -1,44 +1,57 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
+# Cargo
 
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
-# NomedoProjeto
-
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Número da Lista**: 4<br>
+**Conteúdo da Disciplina**: Dividir e Conquistar<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 17/0129411 |  Guilherme Mendes Pereira |
+| 17/0163571 |  Murilo Loiola Dantas |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+Cargo é um jogo onde o jogador deve levar seu navio cargueiro até o porto sem colidir com outros navios.
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: Python<br>
+**Pré-requisitos**: [Python](https://www.python.org/downloads/), [pygame](https://www.pygame.org/wiki/GettingStarted) e [pip](https://packaging.python.org/tutorials/installing-packages/).<br>
+**Execução do projeto** <br>
+
+* Clone o repositório:
+```bash
+git clone https://github.com/projeto-de-algoritmos/D-C_Dupla13A.git
+```
+* Acesse o repositório e instale as bibliotecas necessárias:
+```bash
+cd D-C_Dupla31A/
+pip3 install -r requirements.txt
+```
+* Execute o Cargo e divirta-se:
+```bash
+python3 src/game.py
+```
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+
+### Vídeo explicativo
+[Video]()
+
+* Player - navio branco.
+* Saída - porto.
+* Obstáculos - navios vermelhos.
+
+* Clique com o botão esquerdo do mouse em *Start*
+* Controle o player com ←, ↑, →,  ↓ do teclado.
+* Encontre a saída sem colidir com nenhum obstáculo.
+* Clique em *Restart* para jogar novamente.
+* Clique em *Next* para avançar de fase.
+* Clique em *Quit* para encerrar o jogo.
 
 ## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+A quantidade de navios "inimigos" que aparecem por segundo aumenta a cada fase. São 5 fases no total.
 
 
 

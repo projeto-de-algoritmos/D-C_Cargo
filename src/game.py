@@ -3,7 +3,7 @@ import random
 import math
 import time
 
-from src import merge_sort as mg, closest_pair_of_points as closest, auxiliary as aux, colors
+import merge_sort as mg, closest_pair_of_points as closest, auxiliary as aux, colors
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -13,6 +13,9 @@ level = 1
 players_img = pygame.image.load('../src/images/ship-player.png')
 ships_img = pygame.image.load('../src/images/ships.png')
 port_img = pygame.image.load('../src/images/port.png')
+pygame.display.set_caption("Cargo")
+icon = pygame.image.load('../src/images/ship-player.png')
+pygame.display.set_icon(icon)
 
 screen = pygame.display.set_mode(size)
 screen.fill(colors.WHITE)

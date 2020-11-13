@@ -1,5 +1,5 @@
 import pygame
-from src import colors
+import colors
 import random
 import sys
 
