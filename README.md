@@ -10,7 +10,7 @@
 | 17/0163571 |  Murilo Loiola Dantas |
 
 ## Sobre 
-Cargo é um jogo onde o jogador deve levar seu navio cargueiro até o porto sem colidir com outros navios.
+Cargo é um jogo onde o jogador deve levar seu navio cargueiro até o porto sem colidir com outros navios. O projeto utiliza o algoritmo de Par de Pontos mais Próximos para detectar se houve uma colisão entre dois navios quaisquer.
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
