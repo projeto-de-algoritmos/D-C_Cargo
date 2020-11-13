@@ -51,7 +51,7 @@ python3 src/game.py
 ## Uso 
 
 ### Vídeo explicativo
-[Video]()
+[Video](https://github.com/projeto-de-algoritmos/D-C_Cargo/blob/master/video_explicacao.mp4)
 
 * Player - navio branco.
 * Saída - porto.
