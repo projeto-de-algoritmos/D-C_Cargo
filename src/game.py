@@ -14,7 +14,7 @@ players_img = pygame.image.load('../src/images/ship-player.png')
 ships_img = pygame.image.load('../src/images/ships.png')
 port_img = pygame.image.load('../src/images/port.png')
 pygame.display.set_caption("Cargo")
-icon = pygame.image.load('../src/images/ship-player.png')
+icon = pygame.image.load('../src/images/icon.png')
 pygame.display.set_icon(icon)
 
 screen = pygame.display.set_mode(size)
