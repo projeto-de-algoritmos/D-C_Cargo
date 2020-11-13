@@ -1,15 +1,17 @@
 import pygame
 import colors
-import sys
 import random
-import merge_sort as mg
-import closest_pair_of_points as closest
 import math
 import time
+
+import merge_sort as mg
+import closest_pair_of_points as closest
+import auxiliary as aux
 
 pygame.init()
 clock = pygame.time.Clock()
 size = (1366, 768)
+level = 1
 
 players_img = pygame.image.load('ship-player.png')
 ships_img = pygame.image.load('ships.png')
@@ -17,10 +19,6 @@ port_img = pygame.image.load('port.png')
 
 screen = pygame.display.set_mode(size)
 screen.fill(colors.WHITE)
-
-
-def draw_circle(circle, color):
-    return pygame.draw.circle(screen, color, circle.rect.center, 10)
 
 
 def update(player, out, ships):
@@ -68,10 +66,10 @@ class Exit(object):
 class Ship(object):
     def __init__(self):
         spawn_points = {
-            "negative_x": negative_x,
-            "positive_x": positive_x,
-            "negative_y": negative_y,
-            "positive_y": positive_y
+            "negative_x": aux.negative_x,
+            "positive_x": aux.positive_x,
+            "negative_y": aux.negative_y,
+            "positive_y": aux.positive_y
         }
         directions = ["negative_x", "negative_y", "positive_x", "positive_y"]
         chances = [0.25, 0.25, 0.25, 0.25]
@@ -82,43 +80,6 @@ class Ship(object):
         spawn_points[random.choices(directions, chances)[0]](self)
 
 
-def negative_x(ship):
-    ship.positions[0] = -20
-    ship.positions[1] = random.randint(0, 768)
-    ship.velocity[3] = 1
-    ship.velocity[1] = random.random()
-    ship.velocity[0] = random.random()
-
-
-def positive_x(ship):
-    ship.positions[0] = 1390
-    ship.positions[1] = random.randint(0, 768)
-    ship.velocity[2] = 1
-    ship.velocity[1] = random.random()
-    ship.velocity[0] = random.random()
-
-
-def negative_y(ship):
-    ship.positions[0] = random.randint(0, 1366)
-    ship.positions[1] = -20
-    ship.velocity[1] = 1
-    ship.velocity[3] = random.random()
-    ship.velocity[2] = random.random()
-
-
-def positive_y(ship):
-    ship.positions[0] = random.randint(0, 1366)
-    ship.positions[1] = 790
-    ship.velocity[0] = 1
-    ship.velocity[3] = random.random()
-    ship.velocity[2] = random.random()
-
-
-def quit_game():
-    pygame.quit()
-    sys.exit()
-
-
 def get_x_coordinates(ships, player):
     temp = []
     for ship in ships:
@@ -127,16 +88,16 @@ def get_x_coordinates(ships, player):
     return temp
 
 
-def collision(ships, ordered_array, player):
+def collision(ships, ordered_array, player, time_elapsed):
     if ships:
         pair = closest.closest_pair(ordered_array)
         p1 = pair[0]
         p2 = pair[1]
         if p1 and math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) < 30:
-            if time.process_time() < 3:
+            if time.perf_counter() - time_elapsed < 1.5:
                 return
             elif p1 == (player.rect[0], player.rect[1]) or p2 == (player.rect[0], player.rect[1]):
-                quit_game()
+                restart_game_window(False)
             for x in ships:
                 if (x.rect[0], x.rect[1]) == p1:
                     ships.remove(x)
@@ -147,24 +108,91 @@ def collision(ships, ordered_array, player):
                     break
 
 
+def menu_window():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                aux.quit_game()
+
+        screen.fill(colors.BLUE)
+
+        aux.button(screen, 'START', 590, 550, 200, 100, colors.BRIGHT_GREEN, game_loop)
+        pygame.display.update()
+        clock.tick(15)
+
+
+def restart_game_window(win):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                aux.quit_game()
+
+        if win and level == 5:
+            finish_game_window()
+
+        aux.button(screen, 'RESTART', 510, 450, 100, 50, colors.GREEN, game_loop)
+        if win:
+            aux.game_win_text(screen)
+            aux.button(screen, 'NEXT', 630, 450, 100, 50, colors.BLUE, next_level)
+        else:
+            aux.game_lose_text(screen)
+        aux.button(screen, 'QUIT', 750, 450, 100, 50, colors.RED, aux.quit_game)
+
+        pygame.display.update()
+        clock.tick(15)
+
+
+def finish_game_window():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                aux.quit_game()
+
+        aux.game_finish_text(screen)
+        aux.button(screen, 'QUIT', 630, 450, 100, 50, colors.RED, aux.quit_game)
+
+        pygame.display.update()
+        clock.tick(15)
+
+
+# increase difficulty
+def next_level():
+    global level
+    level += 1
+    game_loop()
+
+
 def game_loop():
+    elapsed = time.perf_counter()
     player = Player()
     out = Exit()
     screen.fill(colors.WHITE)
     loop_counter = 0
     ships = []
+    levels = {
+        1: 100,
+        2: 50,
+        3: 25,
+        4: 13,
+        5: 7,
+        6: finish_game_window
+    }
 
     while True:
         update(player, out, ships)
-        if loop_counter == 100:
+        if loop_counter == levels[level]:
             ships.append(Ship())
             loop_counter = 0
-        ordered_array = mg.merge_sort(get_x_coordinates(ships, player))
-        collision(ships, ordered_array, player)
+        else:
+            ordered_array = mg.merge_sort(get_x_coordinates(ships, player))
+            collision(ships, ordered_array, player, elapsed)
+
+        if math.sqrt((player.rect[0] - out.rect[0]) ** 2 + (player.rect[1] - out.rect[1]) ** 2) < 30:
+            restart_game_window(True)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                quit_game()
+                aux.quit_game()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     player.movement[0] = 1
@@ -190,6 +218,7 @@ def game_loop():
 
 
 def main():
+    menu_window()
     game_loop()
 
 
